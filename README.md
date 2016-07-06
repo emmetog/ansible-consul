@@ -70,7 +70,7 @@ For example, you could alternatively set up a single consul instance using this:
 License
 -------
 
-BSD
+MIT
 
 Author Information
 ------------------
