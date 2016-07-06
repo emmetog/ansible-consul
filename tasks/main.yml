@@ -9,11 +9,11 @@
 
 - name: Ensure docker-compose for consul is up to date
   template:
-    src: docker-compose-swarm-consul.yml
-    dest: /containers/docker-compose/docker-compose-swarm-consul.yml
+    src: docker-compose-consul.yml
+    dest: /containers/docker-compose/docker-compose-consul.yml
 
 - name: Run docker-compose pull
-  command: /usr/local/bin/docker-compose -f /containers/docker-compose/docker-compose-swarm-consul.yml --project-name swarm-consul pull
+  command: /usr/local/bin/docker-compose -f /containers/docker-compose/docker-compose-consul.yml --project-name consul pull
 
 - name: Run docker-compose up
-  command: /usr/local/bin/docker-compose -f /containers/docker-compose/docker-compose-swarm-consul.yml --project-name swarm-consul up -d
+  command: /usr/local/bin/docker-compose -f /containers/docker-compose/docker-compose-consul.yml --project-name consul up -d

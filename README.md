@@ -12,17 +12,17 @@ Role Variables
 --------------
 
 ```yml
-swarm_consul_hostname: server-1.my.company.lan
-swarm_consul_command: -server -advertise {{ ansible_default_ipv4['address'] }} -bootstrap-expect 3
+consul_hostname: server-1.my.company.lan
+consul_command: -server -advertise {{ ansible_default_ipv4['address'] }} -bootstrap-expect 3
 ```
-The `swarm_consul_command` can be any valid consul command. You might want to bootstrap the primary server
+The `consul_command` can be any valid consul command. You might want to bootstrap the primary server
 with this command:
 ```
-swarm_consul_command: "-server -advertise {{ ansible_default_ipv4['address'] }} -bootstrap-expect 3"
+consul_command: "-server -advertise {{ ansible_default_ipv4['address'] }} -bootstrap-expect 3"
 ```
 and then start the secondary servers with this command:
 ```
-swarm_consul_command: "-server -advertise {{ ansible_default_ipv4['address'] }} -join {{ hostvars[groups['docker_cluster_primary'][0]]['ansible_default_ipv4']['address'] }}"
+consul_command: "-server -advertise {{ ansible_default_ipv4['address'] }} -join {{ hostvars[groups['docker_cluster_primary'][0]]['ansible_default_ipv4']['address'] }}"
 ```
 where the join IP is the IP of the first consul instance.
 
@@ -36,7 +36,7 @@ Usage
 
 First install the role from ansible galaxy:
 ```
-$ ansible-galaxy install emmetog.swarm-consul
+$ ansible-galaxy install emmetog.consul
 ```
 
 Then use the role in a playbook as follows:
@@ -44,14 +44,14 @@ Then use the role in a playbook as follows:
 - hosts: server_primary
   roles:
      - {
-        role: emmetog.swarm-consul,
-        swarm_consul_command: "-server -advertise {{ ansible_default_ipv4['address'] }} -bootstrap-expect 3"
+        role: emmetog.consul,
+        consul_command: "-server -advertise {{ ansible_default_ipv4['address'] }} -bootstrap-expect 3"
      }
 - hosts: server_secondaries
   roles:
      - {
-        role: emmetog.swarm-consul,
-        swarm_consul_command: "-server -advertise {{ ansible_default_ipv4['address'] }} -join {{ hostvars[groups['server_primary'][0]]['ansible_default_ipv4']['address'] }}"
+        role: emmetog.consul,
+        consul_command: "-server -advertise {{ ansible_default_ipv4['address'] }} -join {{ hostvars[groups['server_primary'][0]]['ansible_default_ipv4']['address'] }}"
      }
 ```
 
@@ -62,8 +62,8 @@ For example, you could alternatively set up a single consul instance using this:
 - hosts: server_primary
   roles:
      - {
-        role: emmetog.swarm-consul,
-        swarm_consul_command: "-server -advertise {{ ansible_default_ipv4['address'] }} -bootstrap"
+        role: emmetog.consul,
+        consul_command: "-server -advertise {{ ansible_default_ipv4['address'] }} -bootstrap"
      }
 ```
 
